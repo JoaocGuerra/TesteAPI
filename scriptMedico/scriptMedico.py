@@ -4,9 +4,9 @@ from datetime import datetime
 import requests
 
 
-def menu(data, numeropaciente):
+def menu(data, numero_paciente):
     print("Data: ", data)
-    print("Paciente em atendimento: ", numeropaciente)
+    print("Paciente em atendimento: ", numero_paciente)
     print("==========================")
     print("#OP#         Ação")
     print("#1#  Atendimento concluído")
@@ -14,8 +14,8 @@ def menu(data, numeropaciente):
     print("==========================")
 
 
-def serviceCompleted(numeropaciente):
-    print("Atendimento do Paciente " + numeropaciente + " encerrado", )
+def serviceCompleted(numero_paciente):
+    print("Atendimento do Paciente " + numero_paciente + " encerrado", )
     time.sleep(1)
     print("Chamando próximo paciente")
     time.sleep(1)
@@ -27,30 +27,30 @@ def serviceCompleted(numeropaciente):
     time.sleep(1)
 
 
-dateVIEW = datetime.today().strftime('%d-%m-%Y')
-dateURL = datetime.today().strftime('%d%m%Y')
-dateURL = dateURL[:4] + dateURL[6:]
+date_view = datetime.today().strftime('%d-%m-%Y')
+date_url = datetime.today().strftime('%d%m%Y')
+date_url = date_url[:4] + date_url[6:]
 
 headers = {
     'Accept': '*/*',
     'User-Agent': 'request'
 }
 
-urlOA = "http://127.0.0.1:5000/atendimento/read/"
+url_oa = "http://127.0.0.1:5000/atendimento/read/"
 
-doctorRegistration = str(input("Insira sua mátricula: "))
-patientInCare = urlOA + doctorRegistration + "/" + dateURL
+doctor_registration = str(input("Insira sua mátricula: "))
+patient_in_care = url_oa + doctor_registration + "/" + date_url
 
 while 1:
-    patientPosition = str(requests.get(patientInCare).json()['paciente'])
-    menu(dateVIEW, patientPosition)
+    patient_position = str(requests.get(patient_in_care).json()['paciente'])
+    menu(date_view, patient_position)
     option = int(input("Insira a opcão desejada: "))
     if option == 1:
-        serviceCompleted(patientPosition)
+        serviceCompleted(patient_position)
         nextPatient = {
-            "codigo_medico": doctorRegistration,
-            "dia_mes_ano": dateURL,
-            "posicao_paciente_atendido": int(patientPosition)
+            "codigo_medico": doctor_registration,
+            "dia_mes_ano": date_url,
+            "posicao_paciente_atendido": int(patient_position)
         }
         urlPP = "http://127.0.0.1:5000/atendimento/update/paciente-atendido"
         requests.put(urlPP, headers=headers, json=nextPatient)
