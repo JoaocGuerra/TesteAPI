@@ -1,7 +1,7 @@
 import json
 
 from scriptPaciente.constants.contant import URL_PATH, PATH_HORARIOS_DISPONIVEIS, PATH_INSERIR_PACIENTE, \
-    PATH_POSICAO_FILA, PATH_POSICAO_EM_ATENDIMENTO
+    PATH_POSICAO_FILA, PATH_POSICAO_EM_ATENDIMENTO, PATH_DELETE
 import requests
 
 
@@ -32,3 +32,17 @@ class Api:
         url = URL_PATH + PATH_POSICAO_EM_ATENDIMENTO + "/" + contexto.codigo_medico + "/" + contexto.dia_mes_ano
 
         return requests.get(url).json()
+
+    def desmarcar_consulta(self,contexto):
+
+        url = URL_PATH + PATH_DELETE
+
+        dict_delete = {
+            'codigo_medico': contexto.codigo_medico,
+            'dia_mes_ano': contexto.dia_mes_ano,
+            'codigo_paciente': contexto.codigo_paciente
+        }
+
+        retorno = requests.delete(url, json=dict_delete)
+
+        return retorno.status_code

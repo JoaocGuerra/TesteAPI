@@ -15,7 +15,7 @@ class MenuSecundario:
 
     def menu_codigo_paciente(self):
 
-        codigo_paciente = int(input(DIGITE_SEU_ID))
+        codigo_paciente = input(DIGITE_SEU_ID)
         self.get_set_informacoes.setCodigoPaciente(codigo_paciente)
 
     def menu_medicos(self):
@@ -79,7 +79,7 @@ class MenuSecundario:
 
         return menu
 
-    def menu_consultar_situacao_fila(self):
+    def menu_consultas(self):
 
         doc_ref = self.db.collection('pacientes').document(str(self.get_set_informacoes.getCodigoPaciente())).collection('consultas').stream()
         lista_consultas = []

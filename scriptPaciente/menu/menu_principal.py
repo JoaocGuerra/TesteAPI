@@ -16,7 +16,8 @@ class MenuPaciente:
 
         menu += "==========================\n"
         menu += "1 - Marcar consulta\n"
-        menu += "2 - Consultar Situação da Fila\n"
+        menu += "2 - Desmarcar Consulta\n"
+        menu += "3 - Consultar Situação da Fila\n"
         menu += "=========================="
 
         print(menu)
@@ -30,8 +31,8 @@ class MenuPaciente:
     def menu_marcar_consulta_horarios(self,codigo_medico,dia_mes_ano):
         print(self.menu_secundario.menu_horarios_disponiveis(codigo_medico,dia_mes_ano))
 
-    def menu_consulta_situacao_fila(self):
-        print(self.menu_secundario.menu_consultar_situacao_fila())
+    def menu_consultas(self):
+        print(self.menu_secundario.menu_consultas())
 
     def menu_situacao_fila(self,contexto):
         print(self.menu_secundario.menu_situacao_fila(contexto))

@@ -19,7 +19,11 @@ class Menu:
 
         if escolha_menu_paciente == 1:
             self.__marcar_consulta()
+
         if escolha_menu_paciente == 2:
+            self.__desmarcar_consulta()
+
+        if escolha_menu_paciente == 3:
             self.__situacao_fila()
 
     def __marcar_consulta(self):
@@ -58,9 +62,26 @@ class Menu:
         except:
             print("Algo de errado aconteceu.")
 
+    def __desmarcar_consulta(self):
+
+        self.menu_paciente.menu_consultas()
+        opcao_consulta = int(input(ESCOLHER_OPCAO)) - 1
+        consulta = self.get_set_informacoes.getListaConsultas()[opcao_consulta]
+
+        contexto = Contexto(
+            codigo_medico=consulta['codigo_medico'],
+            dia_mes_ano=consulta['dia_mes_ano'],
+            codigo_paciente=self.get_set_informacoes.getCodigoPaciente(),
+            hora=None,
+            minuto=None
+        )
+
+        self.api.desmarcar_consulta(contexto)
+
+
     def __situacao_fila(self):
 
-        self.menu_paciente.menu_consulta_situacao_fila()
+        self.menu_paciente.menu_consultas()
         opcao_consulta = int(input(ESCOLHER_OPCAO)) - 1
         consulta = self.get_set_informacoes.getListaConsultas()[opcao_consulta]
 
